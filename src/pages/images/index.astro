@@ -1,0 +1,36 @@
+---
+import MainLayout from "@layouts/MainLayout.astro";
+import { Image, Picture } from "astro:assets";
+import img05 from "@images/post-05.png";
+
+// const posts = await Astro.glob("./posts-old/*.{md,mdx}");
+// console.log("🚀 ~ blogPosts", blogPosts);
+---
+
+<MainLayout>
+  <h1 class="text-5xl text-white">Imagenes</h1>
+
+  <img loading="eager" src="/assets/images/post-05.png" alt="" width="250" height="250" />
+
+  <Image src={img05} width="250" height="250" alt="Imagen a post" />
+  <Image src={img05} style={{ height: "250px", width: "250px" }} width="500" height="500" alt="Imagen a post" />
+
+  <h1>Qualityn Low</h1>
+  <Image src={img05} quality={'low'} width="250" height="250" alt="Imagen a post" />
+
+  <h1>Formatos</h1>
+  <Image src={img05} format="avif" width="250" height="250" alt="Imagen a post" />
+  <Image src={img05} format="avif" alt="Imagen a post" />
+  <Image src={img05} format="webp" quality={'low'} alt="Imagen a post" />
+
+  <h1>Picture</h1>
+  <Picture
+  widths={[240, 540, 720, img05.width]}
+  sizes={`(max-width: 360px) 240px, (max-width: 720px) 540px, (max-width: 1600px) 720px, ${img05.width}`}
+  src={img05} format="avif"  formats={['avif','webp','jpeg', 'jpg']} width="250" height="250" alt="Imagen a post" />
+
+
+  <div style={{ height: "3000px" }}></div>
+
+  <img loading="lazy" src="/assets/images/post-01.png" alt="" width="250" height="250" />
+</MainLayout>
