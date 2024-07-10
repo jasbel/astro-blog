@@ -1,4 +1,5 @@
 ---
+import { Formatter } from "@utils/formatter";
 import type { GetStaticPaths } from "astro";
 import { Image } from "astro:assets";
 import { getEntry } from "astro:content";
@@ -8,7 +9,7 @@ import Layout from "src/layouts/Layout.astro";
 export const getStaticPaths = (async () => {
   const blogPosts = await getCollection("blog");
 
-  return blogPosts.map(bp => {
+  return blogPosts.map((bp) => {
     return {
       params: { slug: bp.slug },
       props: { post: bp },
@@ -25,14 +26,26 @@ const author = (await getEntry("author", post.data.author.id)).data;
 ---
 
 <Layout title={frontmatter.title}>
-  <h1>{frontmatter.title}</h1>
-  <h4>{frontmatter.author}</h4>
+  <h1 class="text-xs text-gray-500 mb-0">{frontmatter.title}</h1>
 
-  <div>
-    <Image src={author.avatar} alt={author.name} width={160} height={160}/>
+  <div class="text-md text-gray-400 mb-0 flex flex-row mt-2">
+    <Image src={author.avatar} alt={author.name} class={"rounded-full"} width={50} height={50} />
+    <div class="flex flex-col ml-5">
+      <a href={`/blogs/${frontmatter.author.id}`}>{author.name}</a>
+      <span class="text-xs text-gray-200">
+        {Formatter.formatDate(frontmatter.date)}
+      </span>
+    </div>
   </div>
 
-  <Image src={frontmatter.image} alt={frontmatter.title} width={600} height={220} class="object-cover w-full h-[250px] my-5 rounded-md" transition:name={`${post.slug}-image`} />
+  <Image
+    src={frontmatter.image}
+    alt={frontmatter.title}
+    width={600}
+    height={220}
+    class="object-cover w-full h-[250px] my-5 rounded-md"
+    transition:name={`${post.slug}-image`}
+  />
 
   <h3>Tabla de contenidos</h3>
   <ol>
